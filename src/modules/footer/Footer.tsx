@@ -1,26 +1,30 @@
 import React from "react";
+import { Link, withRouter, RouteComponentProps } from "react-router-dom";
+
 import './footer.scss';
 
-export default function Footer() {
+function FooterComponent(props: RouteComponentProps) {
+
+    const isActive = (path: string) => path === props.location.pathname ? 'is-active': '';
     return (
         <div className="hero-foot">
             <nav className="tabs is-boxed is-fullwidth">
                 <div className="container">
                     <ul>
-                        <li >
-                            <a>About</a>
+                        <li className={ isActive('/') }>
+                            <Link to="/">About</Link>
                         </li>
-                        <li>
-                            <a>Create wallet</a>
+                        <li className={ isActive('/create-wallet') }>
+                            <Link to="/">Create wallet</Link>
                         </li>
-                        <li>
-                            <a>Wallet info</a>
+                        <li className={ isActive('/wallet-info') }>
+                            <Link to="/">Wallet info</Link>
                         </li>
-                        <li className="is-active">
-                            <a>Send transactions</a>
+                        <li className={ isActive('/create-tx') }>
+                            <Link to="/create-tx">Send transactions</Link>
                         </li>
-                        <li>
-                            <a>Cast votes</a>
+                        <li className={ isActive('/cast-votes') }>
+                            <Link to="/">Cast votes</Link>
                         </li>
                     </ul>
                 </div>
@@ -28,3 +32,5 @@ export default function Footer() {
         </div>
     );
 }
+
+export const Footer = withRouter(props => <FooterComponent {...props}/>);
