@@ -1,28 +1,26 @@
-import React, { Component } from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React  from "react";
+import "./styles/styles.scss";
+import "./styles/bulma.scss";
+import "./styles/forms.scss";
+import "./styles/margins.scss";
+import About from "./modules/About/About";
+import Header from "./modules/header/Header";
+import Footer from "./modules/footer/Footer";
+import { library } from "@fortawesome/fontawesome-svg-core";
+import { faCheckCircle, faExchangeAlt, faUnlockAlt, faKey } from "@fortawesome/free-solid-svg-icons";
+import CreateTx from "./modules/createTx/CreateTx";
 
-class App extends Component {
-  render() {
-    return (
-      <div className="App">
-        <header className="App-header">
-          <img src={logo} className="App-logo" alt="logo" />
-          <p>
-            Edit <code>src/App.tsx</code> and save to reload.
-          </p>
-          <a
-            className="App-link"
-            href="https://reactjs.org"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Learn React
-          </a>
-        </header>
-      </div>
-    );
-  }
+library.add(faCheckCircle, faExchangeAlt, faUnlockAlt, faKey);
+
+export default function App() {
+  return (
+    <section className="hero is-fullheight lines">
+      <Header />
+
+      {/*<About />*/}
+      <CreateTx/>
+
+      <Footer />
+    </section>
+  );
 }
-
-export default App;

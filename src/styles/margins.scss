@@ -1,0 +1,17 @@
+@for $i from 0 to 150 {
+  //.padding-#{$i}-left {
+  //  padding-left: $i + px;
+  //}
+  .top#{$i} {
+    margin-top: $i + px;
+  }
+  .left#{$i} {
+    margin-left: $i + px;
+  }
+  .right#{$i} {
+    margin-right: $i + px;
+  }
+  .bottom#{$i} {
+    margin-bottom: $i + px;
+  }
+}
