@@ -12,11 +12,13 @@ import {
   faCheckCircle,
   faExchangeAlt,
   faUnlockAlt,
-  faKey
+  faKey,
+  faEye,
+  faEyeSlash,
 } from "@fortawesome/free-solid-svg-icons";
 import CreateTx from "./modules/createTx/CreateTx";
 
-library.add(faCheckCircle, faExchangeAlt, faUnlockAlt, faKey);
+library.add(faCheckCircle, faExchangeAlt, faUnlockAlt, faKey, faEye, faEyeSlash);
 
 export default function App() {
   return (

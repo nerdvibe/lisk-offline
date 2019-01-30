@@ -44,6 +44,10 @@ body {
   padding-right: 15px;
 }
 
-.top25 {
-  padding-top: 25px;
+.is-right-clickable {
+  pointer-events: initial!important;
 }
+
+.uppercased {text-transform: uppercase;}
+.uppercased::-webkit-input-placeholder {text-transform: lowercase;}
+.uppercased::-moz-placeholder {text-transform: lowercase;}
