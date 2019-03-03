@@ -1,0 +1,37 @@
+import React, { useState } from "react";
+
+export interface Props {
+    nextStep: () => void;
+    closeModal: () => void;
+    secondPassphrase: string;
+}
+
+export default function VotesSummary(
+    { nextStep, closeModal, secondPassphrase }: Props
+) {
+    return (
+        <div className="modal-card">
+            <header className="modal-card-head">
+                <p className="modal-card-title">Cast votes></p>
+                <button className="delete" aria-label="close" onClick={closeModal}></button>
+            </header>
+            <section className="modal-card-body">
+                <h1 className="subtitle">Just to make sure, this are the vote:</h1>
+                <strong>
+                    {secondPassphrase!
+                        .split(" ")
+                        .map((word: string, i: number) =>
+                            <span className="passphrase-word" key={i}>
+                                {word}
+                          </span>
+                        )}
+                </strong>
+                <p className="top25">Do you want to confirm the operation?</p>
+            </section>
+            <footer className="modal-card-foot">
+                <button className="button is-info is-outlined" onClick={closeModal}>No, cancel</button>
+                <button className="button is-success is-outlined" onClick={nextStep}>Yes, confirm</button>
+            </footer>
+        </div>
+    );
+}
