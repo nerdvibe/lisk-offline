@@ -1,6 +1,14 @@
+/**
+ * This was copied from main.js in the root of the electron-quick-start repo
+ * https://github.com/electron/electron-quick-start/blob/master/main.js
+ */
+
 // Modules to control application life and create native browser window
-// @ts-ignore
-const { app, BrowserWindow } = require("public/electron");
+const { app, BrowserWindow } = require("electron");
+
+// Added for getting correct file path
+const path = require("path");
+const url = require("url");
 
 // Keep a global reference of the window object, if you don't, the window will
 // be closed automatically when the JavaScript object is garbage collected.
@@ -8,20 +16,27 @@ let mainWindow;
 
 function createWindow() {
   // Create the browser window.
-  mainWindow = new BrowserWindow({
-    width: 880,
-    height: 700,
-    minWidth: 880,
-    minHeight: 720
-  });
+  mainWindow = new BrowserWindow({ width: 800, height: 600 });
 
   // and load the index.html of the app.
-  // mainWindow.loadFile('index.html')
-  // and load the index.html of the app.
-  mainWindow.loadURL("http://localhost:3000");
+  //mainWindow.loadFile('index.html');
+
+  // Added for use with create-react-app
+  //mainWindow.loadFile('./public/index.html'); //@TODO this serves a white screen as it cannot find the index.html
+
+  // This serves the proper html, it should be replaced with the new loadFile method at some point
+  const startUrl =
+    process.env.ELECTRON_START_URL ||
+    url.format({
+      pathname: path.join(__dirname, "/../build/index.html"),
+      protocol: "file:",
+      slashes: true
+    });
+
+  mainWindow.loadURL(startUrl);
 
   // Open the DevTools.
-  // mainWindow.webContents.openDevTools()
+  mainWindow.webContents.openDevTools();
 
   // Emitted when the window is closed.
   mainWindow.on("closed", function() {
@@ -39,7 +54,7 @@ app.on("ready", createWindow);
 
 // Quit when all windows are closed.
 app.on("window-all-closed", function() {
-  // On macOS it is common for applications and their menu bar
+  // On OS X it is common for applications and their menu bar
   // to stay active until the user quits explicitly with Cmd + Q
   if (process.platform !== "darwin") {
     app.quit();
@@ -47,7 +62,7 @@ app.on("window-all-closed", function() {
 });
 
 app.on("activate", function() {
-  // On macOS it's common to re-create a window in the app when the
+  // On OS X it's common to re-create a window in the app when the
   // dock icon is clicked and there are no other windows open.
   if (mainWindow === null) {
     createWindow();
@@ -56,6 +71,3 @@ app.on("activate", function() {
 
 // In this file you can include the rest of your app's specific main process
 // code. You can also put them in separate files and require them here.
-
-// export default '' // ✨ typescript magic... -> isolatedModules rule throws here without this :(
-module.exports = { foo: "foo" };

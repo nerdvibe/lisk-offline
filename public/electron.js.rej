@@ -1,4 +1,4 @@
-diff a/public/electron.js b/public/electron.js	(rejected hunks)
+diff a/public/main.js b/public/main.js	(rejected hunks)
 @@ -3 +3 @@
 -const {app, BrowserWindow} = require('electron');
 +const { app, BrowserWindow } = require("electron");
