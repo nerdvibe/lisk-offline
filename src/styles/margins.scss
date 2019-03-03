@@ -3,15 +3,15 @@
   //  padding-left: $i + px;
   //}
   .top#{$i} {
-    margin-top: $i + px;
+    margin-top: $i + px!important;
   }
   .left#{$i} {
-    margin-left: $i + px;
+    margin-left: $i + px!important;
   }
   .right#{$i} {
-    margin-right: $i + px;
+    margin-right: $i + px!important;
   }
   .bottom#{$i} {
-    margin-bottom: $i + px;
+    margin-bottom: $i + px!important;
   }
 }

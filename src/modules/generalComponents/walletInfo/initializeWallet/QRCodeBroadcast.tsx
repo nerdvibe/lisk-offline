@@ -14,7 +14,7 @@ export default function QRCodeBroadcast(
         <div className="modal-card">
             <header className="modal-card-head">
                 <p className="modal-card-title">Initialize Wallet</p>
-                <button className="delete" aria-label="close"></button>
+                <button className="delete" aria-label="close" onClick={closeModal}></button>
             </header>
             <section className="modal-card-body">
                 <h1 className="subtitle">Okay now broadcast your transaction by scanning the following QR Code.</h1>

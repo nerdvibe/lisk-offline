@@ -19,16 +19,20 @@ export const createTransaction = ({
   const transaction: TransferInputs = {
     amount,
     recipientId: address,
-    passphrase
+    passphrase,
+    secondPassphrase,
+    data,
   };
-  if (secondPassphrase) {
+  console.log(secondPassphrase);
+  if (!secondPassphrase || !secondPassphrase.length) {
     // @ts-ignore
-    transaction.secondPassphrase = secondPassphrase;
+      delete transaction.secondPassphrase
   }
-  if (data) {
+  if (!data || !data.length) {
     // @ts-ignore
-    transaction.data = data;
+      delete transaction.data
   }
 
+  console.log(transaction);
   return transfer(transaction);
 };

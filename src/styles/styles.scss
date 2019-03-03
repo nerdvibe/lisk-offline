@@ -1,3 +1,5 @@
+@import 'bulma.scss';
+
 body {
   margin: 0;
   padding: 0;
@@ -48,6 +50,58 @@ body {
   pointer-events: initial!important;
 }
 
+.passphrase-word {
+  display: inline-block;
+  min-width: 67px;
+  border-bottom: 2px solid #cee9f5;
+  text-align: center;
+  margin-left: 15px;
+  margin-right: 15px;
+}
+
+.print-only{
+  display: none!important;
+}
+
+.is-hidden-not-on-print{
+  display: none;
+}
+
+@media print {
+
+  .show-on-print {
+    display: block!important;
+  }
+
+  .is-hidden {
+    display: block!important;
+  }
+
+  .no-print {
+    display: none!important;
+  }
+
+  .print-only{
+    display: flex!important;
+  }
+
+  .hero-body {
+    padding-top: 5px!important;
+  }
+  .dark-on-print {
+    color: #282c34;
+  }
+  .header-img {
+    filter: invert(.75);
+  }
+}
 .uppercased {text-transform: uppercase;}
 .uppercased::-webkit-input-placeholder {text-transform: lowercase;}
 .uppercased::-moz-placeholder {text-transform: lowercase;}
+
+.is-lighten {
+  opacity: 0.5;
+  &:hover {
+    opacity: unset;
+  }
+}

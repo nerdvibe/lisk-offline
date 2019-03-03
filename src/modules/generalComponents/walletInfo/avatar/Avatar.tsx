@@ -3,7 +3,7 @@ import BigNumber from "bignumber.js";
 import React from "react";
 import sha256 from "js-sha256";
 import { Gradients, gradientSchemes } from "./gradients";
-import { Wallet } from "../../passphraseGenerator/generateWallet";
+import { Wallet } from "../../../../utils/wallet";
 
 export interface Props {
   x: string | number | undefined;

@@ -3,8 +3,8 @@ import Byte from "./Byte";
 import {
     generateSeed,
     generatePassphrase,
-    emptyByte
-} from "./generateWallet";
+    emptyByte, generateWallet, Wallet
+} from "../../../utils/wallet";
 import "./passphrase.scss";
 
 export interface Data {
@@ -13,8 +13,11 @@ export interface Data {
     seed: string[]
     step: number
 }
+export interface Props {
+    setWallet: (wallet: Wallet) => void
+}
 
-export default function PassphraseGenerator() {
+export default function PassphraseGenerator({setWallet}: Props) {
 
     const [lastCaptured, setLastCaptured] = useState<{x: number; y: number}>({
         x: 0,
@@ -28,11 +31,11 @@ export default function PassphraseGenerator() {
 
 
     useEffect(() => {
-        document.addEventListener("mousemove", seedGenerator as EventListener, true);
+        document.addEventListener("mousemove", seedGenerator as any, true);
         return function cleanup() {
             document.removeEventListener(
                 "mousemove",
-                seedGenerator as EventListener,
+                seedGenerator as any,
                 true
             );
         };
@@ -49,7 +52,7 @@ export default function PassphraseGenerator() {
     //     );
     // }
 
-    const seedGenerator = (nativeEvent: MouseEvent) => {
+    const seedGenerator = async (nativeEvent: MouseEvent) => {
         let shouldTrigger;
         if (typeof nativeEvent === "string") {
             shouldTrigger = true;
@@ -92,8 +95,11 @@ export default function PassphraseGenerator() {
             setPassphrase(
                  phrase
             );
-            // props.setPassphraseFromGenerator(phrase);
-            console.log('Voilá', phrase);
+            const wallet = await generateWallet(phrase);
+            if(wallet.error) {
+                throw new Error(wallet.reason)
+            }
+            setWallet(wallet);
         }
     };
 
@@ -108,6 +114,7 @@ export default function PassphraseGenerator() {
             <div>
                 <div className="columns">
                     <div className="column is-8 is-offset-2">
+                        <h1 className="title">Create new wallet</h1>
                         {/*{isTouch*/}
                             {/*? <div>*/}
                                 {/*<p className="title-seed-message">*/}
@@ -123,7 +130,7 @@ export default function PassphraseGenerator() {
                             {/*</div>*/}
                             {/*: */}
                             <p className="">
-                                Move your mouse to generate random bytes
+                                Move your mouse to generate random bytes, this will help making your wallet safer.
                             </p>
                     </div>
                 </div>
@@ -132,19 +139,21 @@ export default function PassphraseGenerator() {
                         Progress:{" "}
                         {percentage()}{" "}
                         %
+                        <progress className="progress is-success" value={percentage()} max="100">75%</progress>
+
                     </div>
                 </div>
                 <div className="columns">
                     <div className="column is-8 is-offset-2">
-                        {(data && data.seed
-                            ? data.seed
-                            : zeroSeed).map((byte, index: number) =>
-                            <Byte
-                                value={byte}
-                                key={index}
-                                diff={seedDiff.indexOf(index) >= 0}
-                            />
-                        )}
+                        {/*{(data && data.seed*/}
+                            {/*? data.seed*/}
+                            {/*: zeroSeed).map((byte, index: number) =>*/}
+                            {/*<Byte*/}
+                                {/*value={byte}*/}
+                                {/*key={index}*/}
+                                {/*diff={seedDiff.indexOf(index) >= 0}*/}
+                            {/*/>*/}
+                        {/*)}*/}
                     </div>
                 </div>
             </div>

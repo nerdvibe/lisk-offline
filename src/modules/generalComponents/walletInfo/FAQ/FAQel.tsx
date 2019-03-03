@@ -2,8 +2,6 @@ import React, {ReactNode, useState} from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 export interface Props {
-    // toggler: () => void;
-    // visible: boolean;
     title: string;
     children: ReactNode
 }

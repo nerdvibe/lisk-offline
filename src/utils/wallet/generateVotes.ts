@@ -8,5 +8,8 @@ export interface generateVotes {
 }
 
 export const generateVotes = (voteObj: generateVotes) => {
+    if(!voteObj.secondPassphrase.length) {
+        delete voteObj.secondPassphrase
+    }
     return castVotes(voteObj);
 };

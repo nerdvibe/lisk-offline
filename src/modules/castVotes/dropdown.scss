@@ -1,0 +1,21 @@
+.dropdown-autocomplete {
+  margin-top: -12px;
+  position: absolute;
+  z-index: 2;
+  width: 100%;
+  border: 2px solid #ffffff40;
+  border-top: 0px;
+  border-radius: 7px;
+  border-top-left-radius: 0px;
+  border-top-right-radius: 0px;
+
+  .element {
+    background-color: #120f1fe6;
+    padding: 5px 5px 5px 40px;
+    &.highlighted {
+      background-color: #385c94;
+      font-weight: bold;
+      padding-left: 45px
+    }
+  }
+}

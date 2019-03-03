@@ -33,6 +33,10 @@ $input-shadow: none;
 $tabs-boxed-link-active-background-color: transparent;
 $fumeForm:  #00000052;
 $input-background-color: $fumeForm;
+$navbar-dropdown-background-color: $fumeForm;
+$navbar-item-hover-background-color: $fumeForm;
+$modal-card-body-background-color: $whitest;
+$modal-card-title-color: $brown;
 
 // import using ~
 @import "../../node_modules/bulma/sass/utilities/all";
@@ -40,3 +44,32 @@ $input-background-color: $fumeForm;
 @import "../../node_modules/bulma/sass/elements/button";
 @import "../../node_modules/bulma/sass/layout/section";
 @import "../../node_modules/bulma";
+@import '~bulma-tooltip';
+
+.box {
+  background-color: transparent;
+  background: linear-gradient(126deg, #e1ebee -23%, #06486d);// #e8eef6d9;
+  .content {
+    color: #ffffff;
+  }
+}
+
+.is-action {
+  background-color: #13141466!important;
+  border-color: transparent!important;
+  color: #fff;
+  &:hover {
+    background-color: rgba(112, 113, 113, 0.4)!important;
+    border-color: transparent;
+    color: #fff;
+  }
+}
+
+.modal-card-body {
+  .subtitle,p,strong {
+    color: #636a77;
+  }
+}
+.modal-card-foot {
+  justify-content: flex-end;
+}

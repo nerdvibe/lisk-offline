@@ -1,36 +1,35 @@
 import React, { useState } from "react";
-import CreateTxForm from "./CreateTxForm";
-import AddressField from "../createTx/CreateTxForm";
-import PassphraseField from "../generalComponents/passphraseField";
+import {
+    Wallet
+} from "../../utils/wallet";
+import Login from "./Login";
+import WalletInfo from "../generalComponents/walletInfo/WalletInfo";
 
-export interface Form {
-  passphrase: string;
-  [key: string]: string | number;
+export interface Passphrase {
+  wallet: Wallet;
 }
 
-export default function WalletAccess() {
-  const [passphrase, setPassphrase] = useState<string>("");
+export interface Props {
+  disableValidation: boolean;
+}
+
+export default function WalletAccess({ disableValidation }: Props) {
+
+    const emptyWallet = {
+        wallet: {},
+        hasSecondPassphrase: false
+    };
+
+  const [wallet, setWallet] = useState<Passphrase>(emptyWallet);
+  const walletReset = () => setWallet(emptyWallet);
 
   return (
     <div className="hero-body">
       <div className="container has-text-centered">
-        <h1 className="title">Access your wallet</h1>
-        <p>Here you can retrive the info about your wallet:</p>
-        <div>
-          <div className="columns top20">
-            <div className="column is-one-fifth" />
-            <div className="column">
-              <PassphraseField icon={"key"} parentMethod={setPassphrase} />
-              <div className="field has-text-left">
-                <label className="checkbox ">
-                  <input type="checkbox" onClick={toggleSecondPassphrase} />
-                  <span className="left10">I have a secondary passphrase</span>
-                </label>
-              </div>
-            </div>
-            <div className="column is-one-fifth" />
-          </div>
-        </div>
+          { wallet.wallet.passphrase && wallet.wallet.passphrase.length ?
+            <WalletInfo wallet={wallet.wallet} walletReset={walletReset}/>
+            : <Login disableValidation={disableValidation} setWallet={setWallet}/>
+          }
       </div>
     </div>
   );

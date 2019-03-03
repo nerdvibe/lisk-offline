@@ -1,27 +1,44 @@
 import React, { useState } from "react";
 import { Tx } from "./CreateTx";
-import PassphraseField from "../generalComponents/passphraseField";
-import AddressField from "../generalComponents/addressField";
-import {isValidAddress, isValidAmount} from "../utils/validation";
+import PassphraseField from "../generalComponents/PassphraseField";
+import AddressField from "../generalComponents/AddressField";
+import {isValidAddress, isValidAmount} from "../../utils/validation";
+import {createTransaction} from "../../utils/wallet";
+import QRCodeBroadcast from "./QRCodeBroadcast";
 
 interface Props {
   tx: Tx
   setTx: (tx: Tx) => void;
+  disableValidation: boolean
 }
 export default function CreateTxForm({
     tx,
-  setTx
+  setTx,
+  disableValidation
 }: Props) {
 
   const [secondPassphrase, setSecondPassphrase] = useState<Boolean>(false);
+  const [signedTx, setSignedTx] = useState<string>('');
+  const [broadcastTxVisibility, setBroadcastTxVisibility] = useState<boolean>(false);
+
+  const closeModal = () => setBroadcastTxVisibility(false)
+
   const editTx = (e: React.ChangeEvent<HTMLInputElement>) =>
       setTx({
           ...tx,
           [e.target.name]: e.target.value
       });
 
-  const submitTx = (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) =>
-    console.log('clicked');
+  const submitTx = (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
+            const transactionToBroadcast = createTransaction({
+            passphrase: tx.passphrase,
+            address: tx.recipient,
+            amount: (parseFloat(tx.amount) * 100000000) + '',
+            secondPassphrase: tx.secondPassphrase
+        });
+      setSignedTx(JSON.stringify(transactionToBroadcast));
+      setBroadcastTxVisibility(true)
+  };
 
   const toggleSecondPassphrase = () => setSecondPassphrase(!secondPassphrase);
   const addPassphrase = (passphrase: string) =>
@@ -66,7 +83,7 @@ export default function CreateTxForm({
               <span className="icon is-small is-left">Ⱡ</span>
             </p>
           </div>
-          <PassphraseField icon={'key'} parentMethod={addPassphrase} error={!validatePassphrase()}/>
+          <PassphraseField icon={'key'} parentMethod={addPassphrase} error={!validatePassphrase()} disabledValidation={disableValidation}/>
           <div className="field has-text-left">
             <label className="checkbox ">
               <input type="checkbox"  onClick={toggleSecondPassphrase}/>
@@ -90,6 +107,7 @@ export default function CreateTxForm({
         </div>
         <div className="column is-one-fifth" />
       </div>
+        <QRCodeBroadcast isModalOpen={broadcastTxVisibility} closeModal={closeModal} qrCodeValue={signedTx}/>
     </div>
   );
 }

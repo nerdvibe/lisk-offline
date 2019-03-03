@@ -1,40 +1,40 @@
 import React, { useState } from "react";
-import {generateMnemonic, createSecondPassphrase} from "../../../utils/wallet";
 import Intro from "./Intro";
-import YourSecondPassphrase from "./YourSecondPassphrase";
-import QRCodeBroadcast from "./QRCode";
+import QRCodeBroadcast from "./QRCodeBroadcast";
+import HaveSecondPassphrase from "./HaveSecondPassphrase";
+import {initializeWallet} from "../../../../utils/wallet";
 
 export interface Props {
-    passphrase: string;
     isModalOpen: boolean;
-    close: () => void
+    close: () => void;
+    passphrase: string;
+    address: string;
 }
 
-export default function CreateSecondPassphraseModal(
-    { passphrase, close, isModalOpen }: Props
+export default function InitializeWallet(
+    { close, isModalOpen, passphrase, address }: Props
 ) {
     const [step, setStep] = useState<number>(0);
-    const [secondPassphrase, setSecondPassphrase] = useState<string>(generateMnemonic);
 
     const closeModal = () => {
-        console.log('called CloseModal');
         setStep(0);
         close();
     };
     const nextStep = () => {
+      if(step === 2) {
+          return closeModal()
+      }
       setStep(step + 1);
     };
 
-    const txToBroadcast = createSecondPassphrase(passphrase, secondPassphrase);
-
-    // Use 3 switch steps. 1 intro, 2 new passphrase, 3 QR code
+    const txToBroadcast = initializeWallet(passphrase, address);
 
     return (
         <div className={`modal ${isModalOpen ? "is-active" : ''} is-clipped`}>
             <div className="modal-background"></div>
             <div className="is-clipped">
                 {step === 0 && (<Intro nextStep={nextStep} closeModal={closeModal}/>)}
-                {step === 1 && (<YourSecondPassphrase nextStep={nextStep} closeModal={closeModal} secondPassphrase={secondPassphrase}/>)}
+                {step === 1 && (<HaveSecondPassphrase nextStep={nextStep} closeModal={closeModal}/>)}
                 {step === 2 && (<QRCodeBroadcast nextStep={nextStep} closeModal={closeModal} qrCodeValue={JSON.stringify(txToBroadcast)}/>)}
             </div>
         </div>

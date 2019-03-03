@@ -1,11 +1,11 @@
 import React, { useState } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import Downshift from "downshift";
-import { delegates } from "../utils/delegates";
-import { shuffle } from "../utils/shuffle";
+import { delegates } from "../../utils/delegates";
+import { shuffle } from "../../utils/shuffle";
 import "./dropdown.scss";
 
-const items = shuffle(delegates);
+const items = shuffle(delegates).map((d) => d.delegateName );
 
 export interface Props {
   addVote: () => void;
@@ -33,6 +33,8 @@ export default function Dropdown({ addVote, addUnVote, votes }: Props) {
     setValue("");
   };
 
+  const isVoteInList = votes.includes('+carbonara');
+
   return (
     <div>
       <Downshift selectedItem={value} onStateChange={handleStateChange}>
@@ -51,8 +53,8 @@ export default function Dropdown({ addVote, addUnVote, votes }: Props) {
           <div style={{ position: "relative" }}>
             <div className="field has-text-left has-addons">
               <div
-                className="control has-icons-left is-expanded  tooltip is-tooltip-warning is-tooltip-top"
-                data-tooltip="If you like this software, please consider voting for Carbonara"
+                className={`control has-icons-left is-expanded  ${!isVoteInList && " tooltip is-tooltip-warning is-tooltip-top"}`}
+                  { ...(!isVoteInList && {"data-tooltip": "If you like this software, please consider voting for Carbonara" })}
               >
                 <input
                   className="input"
@@ -61,7 +63,7 @@ export default function Dropdown({ addVote, addUnVote, votes }: Props) {
                   name="delegateName"
                   {...getInputProps({
                     isOpen,
-                    placeholder: "Enter a name"
+                    placeholder: "Enter a delegate name"
                   })}
                 />
                 <span className="icon is-small is-left">
@@ -107,6 +109,7 @@ export default function Dropdown({ addVote, addUnVote, votes }: Props) {
                             className: `element ${highlightedIndex === index &&
                               "highlighted"}`
                           })}
+                            key={item}
                         >
                           {item}
                           {item === "carbonara" &&

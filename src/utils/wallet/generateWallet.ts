@@ -1,4 +1,5 @@
 import crypto from "crypto";
+//@ts-ignore -> types not available
 import bip39 from "bip39";
 //@ts-ignore -> types not available
 import mnemonic from "bitcore-mnemonic";
