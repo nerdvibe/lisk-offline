@@ -1,5 +1,5 @@
 import React from "react";
-import logo from "../../assets/lisk-logo.svg";
+import logo from "../../assets/lisk-logo";
 
 export default function About() {
   return (

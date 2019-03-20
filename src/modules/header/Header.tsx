@@ -1,5 +1,5 @@
 import React, {useState, useEffect} from "react";
-import logo from "../../assets/lisk-logo.svg";
+import logo from "../../assets/lisk-logo";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 
 export interface Props {
@@ -23,11 +23,11 @@ export const Header = ({setDisableValidation, disableValidation}: Props) => {
     return (
         <nav className="navbar" role="navigation" aria-label="main navigation">
             <div className="navbar-brand">
-                <a className="navbar-item no-print" href="https://bulma.io">
+                <a className="navbar-item no-print">
                     <img src={logo} className="header-img"/>
                     Lisk Offline
                 </a>
-                <a className="navbar-item print-only" href="https://bulma.io">
+                <a className="navbar-item print-only">
                     <img src={logo} className="header-img" color="red"/>
                     Created with Lisk Offline
                 </a>
@@ -68,7 +68,10 @@ export const Header = ({setDisableValidation, disableValidation}: Props) => {
 
             <div className="navbar-dropdown" style={{borderTop: "transparent"}}>
                 <a className="navbar-item" onClick={toggleValidation}>
-                    { disableValidation ? (<span><FontAwesomeIcon icon={"exclamation"} /> Enable</span>) : 'Disable'} passphrase validation
+                    { disableValidation ? (<span><FontAwesomeIcon icon={"exclamation"} /> Enable</span>) : 'Disable '} passphrase validation
+                </a>
+                <a className="navbar-item">
+                    V0.1b
                 </a>
             </div>
         </div>

@@ -1,11 +1,11 @@
 import React, { useState } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import Downshift from "downshift";
-import { delegates } from "../../utils/delegates";
+import { mainnetDelegates } from "../../utils/delegates/";
 import { shuffle } from "../../utils/shuffle";
 import "./dropdown.scss";
 
-const items = shuffle(delegates).map((d) => d.delegateName );
+const items = shuffle(mainnetDelegates).map((d) => d.delegateName );
 
 export interface Props {
   addVote: () => void;

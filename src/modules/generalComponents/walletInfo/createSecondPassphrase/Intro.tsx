@@ -1,5 +1,5 @@
-import React, { useState } from "react";
-import image from "./img/undraw_authentication_fsn5.svg"
+import React  from "react";
+import image from "./img/undraw_authentication"
 
 export interface Props {
     nextStep: () => void;

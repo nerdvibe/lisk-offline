@@ -1,5 +1,5 @@
 import React  from "react";
-import image from "./img/undraw_science_fqhl.svg"
+import image from "./img/undraw_science"
 
 export interface Props {
     nextStep: () => void;

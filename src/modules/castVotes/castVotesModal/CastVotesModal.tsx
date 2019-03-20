@@ -3,7 +3,7 @@ import Intro from "./Intro";
 import QRCodeBroadcast from "./QRCodeBroadcast";
 import Passphrases from "./Passphrases";
 import VotesSummary from "./VotesSummary";
-import {delegates} from "../../../utils/delegates";
+import {mainnetDelegates} from "../../../utils/delegates/";
 import {generateVotes} from "../../../utils/wallet/generateVotes";
 import {QRChunker} from "../../../utils/QRChunker";
 
@@ -36,7 +36,7 @@ export default function CastVotesModal(
         const pkToUnvote: string[] = [];
 
         votes.forEach((vote) => {
-            let delegateEl = delegates.find((d) => d.delegateName.toLowerCase() === vote.toLowerCase().substring(1));
+            let delegateEl = mainnetDelegates.find((d) => d.delegateName.toLowerCase() === vote.toLowerCase().substring(1));
                 const pk = !!delegateEl ? delegateEl.pk : vote.substring(1);
 
             if(vote[0] === "+") {

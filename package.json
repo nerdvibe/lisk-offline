@@ -41,7 +41,7 @@
     "postinstall": "install-app-deps"
   },
   "main": "public/electron.js",
-  "homepage": "./",
+  "homepage": "./.",
   "build": {
     "appId": "com.liskoffline",
     "mac": {

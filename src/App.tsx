@@ -40,11 +40,12 @@ export default function App() {
       <section className="hero is-fullheight lines">
         <Header setDisableValidation={setDisableValidation} disableValidation={disableValidation}/>
         <Switch>
-          <Route exact path="/" component={About} />
           <Route exact path="/create-tx" component={() => <CreateTx disableValidation={disableValidation}/>} />
           <Route exact path="/create-wallet" component={CreateWallet} />
           <Route exact path="/access-wallet" render={() => <WalletAccess disableValidation={disableValidation}/>}/>
           <Route exact path="/cast-votes" component={CastVotes}/>
+          <Route exact path="/" component={About} />
+          <Route component={About} />
         </Switch>
         <Footer />
       </section>

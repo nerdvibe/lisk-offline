@@ -1,5 +1,5 @@
 import React from "react";
-import image from "./img/undraw_following_q0cr.svg"
+import image from "./img/undraw_following"
 
 export interface Props {
     nextStep: () => void;

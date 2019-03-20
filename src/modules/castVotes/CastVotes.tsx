@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import Dropdown from "./Dropdown";
 import CastVotesModal from "./castVotesModal/CastVotesModal";
-import {delegates} from "../../utils/delegates";
+import {mainnetDelegates} from "../../utils/delegates/";
 
 export default function CastVotes() {
   const [votes, setVotes] = useState<string[]>([]);
@@ -45,19 +45,19 @@ export default function CastVotes() {
     setVotes(newVotes);
   };
 
-  // Special button for development to pick 33 random delegates
-  const fill = () => {
-    const finalVotes = [];
-    for (let i = 0; i < 33; i++) {
-      if(i % 2 == 0) {
-        finalVotes.push('+'+delegates[i].delegateName);
-
-      } else {
-        finalVotes.push('-'+delegates[i].delegateName);
-      }
-    }
-    setVotes(finalVotes)
-  };
+  // Special button for development to pick 33 random delegates -> Helpful for debugging
+  // const fill = () => {
+  //   const finalVotes = [];
+  //   for (let i = 0; i < 33; i++) {
+  //     if(i % 2 == 0) {
+  //       finalVotes.push('+'+mainnetDelegates[i].delegateName);
+  //
+  //     } else {
+  //       finalVotes.push('-'+mainnetDelegates[i].delegateName);
+  //     }
+  //   }
+  //   setVotes(finalVotes)
+  // };
 
   return (
     <div className="hero-body">
@@ -67,7 +67,7 @@ export default function CastVotes() {
           You can choose up to 33 votes (vote/unvote) in one transaction
         </h2>
         <p>If the delegate is not available in the dropdown, then please use the public key of the delegate.</p>
-        <button onClick={fill}> fill </button>
+        {/*<button onClick={fill}> fill </button>*/}
         <div className="columns top20">
           <div className="column is-one-fifth" />
           <div className="column">
