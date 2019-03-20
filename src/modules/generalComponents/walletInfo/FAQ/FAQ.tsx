@@ -1,6 +1,7 @@
 import React from "react";
 import FAQel from "./FAQel";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
+import {broadcasterUrl} from "../../../../utils/consts";
 
 export default function FAQ() {
     return (
@@ -43,7 +44,7 @@ export default function FAQ() {
                     </p>
 
                     <p>
-                        <br />When you press the icon to create a second passphrase, this software will generate a second passphrase. Make sure to save the second passphrase and press the button confirm. It will show you QR code containing the transaction to confirm your second passphrase. You'll need to scan this QR code with TODO: URL in order to broadcast the transaction.
+                        <br />When you press the icon to create a second passphrase, this software will generate a second passphrase. Make sure to save the second passphrase and press the button confirm. It will show you QR code containing the transaction to confirm your second passphrase. You'll need to scan this QR code with {broadcasterUrl} in order to broadcast the transaction.
                     </p>
                 </FAQel>
 
@@ -67,7 +68,7 @@ export default function FAQ() {
 
                 <FAQel title="How do I scan the QR codes and broadcast the transactions? ">
                     <p>
-                        Use a smartphone with camera and go to TODO: URL
+                        Use a smartphone with camera and go to  {broadcasterUrl}
                     </p>
                 </FAQel>
         </span>

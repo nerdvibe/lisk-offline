@@ -1,5 +1,6 @@
 import React, {useState} from "react";
 import QRCode from "qrcode.react"
+import {broadcasterUrl} from "../../../utils/consts";
 
 export interface Props {
     nextStep: () => void;
@@ -40,7 +41,7 @@ export default function QRCodeBroadcast(
                     </div>
                 }
 
-                <p className="top25">The votes are not valid until <strong>all</strong> the QR codes have been scanned and the tx is broadcasted. To broadcast the TX scan the QR code with TODO: URL</p>
+                <p className="top25">The votes are not valid until <strong>all</strong> the QR codes have been scanned and the tx is broadcasted. To broadcast the TX scan the QR code with {broadcasterUrl}</p>
                 <div>
                 </div>
             </section>
