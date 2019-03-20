@@ -1,4 +1,9 @@
-# Lisk offline
+<p align="center"> 
+<img src="https://github.com/nerdvibe/lisk-offline/blob/master/public/icon.png?raw=true" width="100" height="100">
+  <br/>
+  <strong>Lisk offline</strong>
+</p>
+<hr/>
 
 ### Disclaimer: This is a preview of Lisk Offline.
 
