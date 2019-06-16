@@ -11,10 +11,11 @@ export default function CreateWallet() {
   return (
     <div className="hero-body">
       <div className="container has-text-centered">
-        {(wallet && wallet.address)
-          ? <WalletInfo wallet={wallet} walletReset={walletReset}/>
-          : <PassphraseGenerator setWallet={setWallet} />
-        }
+        {wallet && wallet.address ? (
+          <WalletInfo wallet={wallet} walletReset={walletReset} />
+        ) : (
+          <PassphraseGenerator setWallet={setWallet} />
+        )}
       </div>
     </div>
   );

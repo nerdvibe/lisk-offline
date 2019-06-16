@@ -1,2 +1,2 @@
-export { mainnetDelegates } from './mainnetDelegates';
-export { testnetDelegates } from './testnetDelegates';
+export { mainnetDelegates } from "./mainnetDelegates";
+export { testnetDelegates } from "./testnetDelegates";

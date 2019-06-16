@@ -21,16 +21,16 @@ export const createTransaction = ({
     recipientId: address,
     passphrase,
     secondPassphrase,
-    data,
+    data
   };
   console.log(secondPassphrase);
   if (!secondPassphrase || !secondPassphrase.length) {
     // @ts-ignore
-      delete transaction.secondPassphrase
+    delete transaction.secondPassphrase;
   }
   if (!data || !data.length) {
     // @ts-ignore
-      delete transaction.data
+    delete transaction.data;
   }
 
   console.log(transaction);

@@ -12,8 +12,7 @@ export interface Props {
   close: () => void;
   votes: string[];
   network: "Testnet" | "Mainnet";
-    setErrorPK: (error: string | null) => any;
-
+  setErrorPK: (error: string | null) => any;
 }
 
 export default function CastVotesModal({
@@ -21,7 +20,7 @@ export default function CastVotesModal({
   isModalOpen,
   votes,
   network,
-                                           setErrorPK
+  setErrorPK
 }: Props) {
   const [step, setStep] = useState<number>(0);
   const [passphrase, setPassphrase] = useState<string>("");
@@ -80,48 +79,49 @@ export default function CastVotesModal({
     };
   };
 
-    let txToBroadcast = '';
-    try {
-      txToBroadcast = JSON.stringify(
-        generateVotes(convertDelegatesToPubKey())
-      );
-       setErrorPK(null);
-    } catch (e) {
-        setErrorPK(
-            "There is an error with your delegates list. Please double check..."
-        );
-    }
+  let txToBroadcast = "";
+  try {
+    txToBroadcast = JSON.stringify(generateVotes(convertDelegatesToPubKey()));
+    setErrorPK(null);
+  } catch (e) {
+    setErrorPK(
+      "There is an error with your delegates list. Please double check..."
+    );
+  }
   const chunkedQRCode = QRChunker(txToBroadcast);
 
   return (
     <div>
       <div
-        className={`modal ${isModalOpen
-          ? "is-active"
-          : ""} is-clipped has-text-centered`}
+        className={`modal ${
+          isModalOpen ? "is-active" : ""
+        } is-clipped has-text-centered`}
       >
         <div className="modal-background" />
         <div className="is-clipped">
           {step === 0 && <Intro nextStep={nextStep} closeModal={closeModal} />}
-          {step === 1 &&
+          {step === 1 && (
             <VotesSummary
               nextStep={nextStep}
               closeModal={closeModal}
               votes={votes}
-            />}
-          {step === 2 &&
+            />
+          )}
+          {step === 2 && (
             <Passphrases
               nextStep={nextStep}
               closeModal={closeModal}
               setPassphrase={setPassphrase}
               setSecondPassphrase={setSecondPassphrase}
-            />}
-          {step === 3 &&
+            />
+          )}
+          {step === 3 && (
             <QRCodeBroadcast
               nextStep={nextStep}
               closeModal={closeModal}
               qrCodeValue={chunkedQRCode}
-            />}
+            />
+          )}
         </div>
       </div>
     </div>

@@ -2,67 +2,71 @@ import React, { useState } from "react";
 import { Tx } from "./CreateTx";
 import PassphraseField from "../generalComponents/PassphraseField";
 import AddressField from "../generalComponents/AddressField";
-import {isValidAddress, isValidAmount} from "../../utils/validation";
-import {createTransaction} from "../../utils/wallet";
+import { isValidAddress, isValidAmount } from "../../utils/validation";
+import { createTransaction } from "../../utils/wallet";
 import QRCodeBroadcast from "./QRCodeBroadcast";
 
 interface Props {
-  tx: Tx
+  tx: Tx;
   setTx: (tx: Tx) => void;
-  disableValidation: boolean
+  disableValidation: boolean;
 }
-export default function CreateTxForm({
-    tx,
-  setTx,
-  disableValidation
-}: Props) {
-
+export default function CreateTxForm({ tx, setTx, disableValidation }: Props) {
   const [secondPassphrase, setSecondPassphrase] = useState<Boolean>(false);
-  const [signedTx, setSignedTx] = useState<string>('');
-  const [broadcastTxVisibility, setBroadcastTxVisibility] = useState<boolean>(false);
+  const [signedTx, setSignedTx] = useState<string>("");
+  const [broadcastTxVisibility, setBroadcastTxVisibility] = useState<boolean>(
+    false
+  );
 
-  const closeModal = () => setBroadcastTxVisibility(false)
+  const closeModal = () => setBroadcastTxVisibility(false);
 
   const editTx = (e: React.ChangeEvent<HTMLInputElement>) =>
-      setTx({
-          ...tx,
-          [e.target.name]: e.target.value
-      });
+    setTx({
+      ...tx,
+      [e.target.name]: e.target.value
+    });
 
   const submitTx = (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
-            const transactionToBroadcast = createTransaction({
-            passphrase: tx.passphrase,
-            address: tx.recipient,
-            amount: (parseFloat(tx.amount) * 100000000) + '',
-            secondPassphrase: tx.secondPassphrase
-        });
-      setSignedTx(JSON.stringify(transactionToBroadcast));
-      setBroadcastTxVisibility(true)
+    const transactionToBroadcast = createTransaction({
+      passphrase: tx.passphrase,
+      address: tx.recipient,
+      amount: parseFloat(tx.amount) * 100000000 + "",
+      secondPassphrase: tx.secondPassphrase
+    });
+    setSignedTx(JSON.stringify(transactionToBroadcast));
+    setBroadcastTxVisibility(true);
   };
 
   const toggleSecondPassphrase = () => setSecondPassphrase(!secondPassphrase);
   const addPassphrase = (passphrase: string) =>
-      setTx({
-        ...tx,
-        passphrase: passphrase
-      });
+    setTx({
+      ...tx,
+      passphrase: passphrase
+    });
   const addSecondPassphrase = (passphrase: string) =>
-      setTx({
-        ...tx,
-        secondPassphrase: passphrase
-      });
+    setTx({
+      ...tx,
+      secondPassphrase: passphrase
+    });
 
   const validateAddress = () =>
-      (!tx.recipient) || (tx.recipient.length > 1 && isValidAddress(tx.recipient));
+    !tx.recipient || (tx.recipient.length > 1 && isValidAddress(tx.recipient));
 
   const validateAmount = () =>
-      (!tx.amount) || (!isNaN(+tx.amount) && +tx.amount > 0 && isValidAmount(tx.amount));
+    !tx.amount ||
+    (!isNaN(+tx.amount) && +tx.amount > 0 && isValidAmount(tx.amount));
 
-  const validatePassphrase = () =>
-      !(tx.passphrase) || (tx.passphrase.length > 1);
+  const validatePassphrase = () => !tx.passphrase || tx.passphrase.length > 1;
 
   const isReadyToGenerate = () => {
-    return !!tx.recipient.length && !!tx.amount.length && !!tx.passphrase.length && validateAddress() && validateAmount() && validatePassphrase()
+    return (
+      !!tx.recipient.length &&
+      !!tx.amount.length &&
+      !!tx.passphrase.length &&
+      validateAddress() &&
+      validateAmount() &&
+      validatePassphrase()
+    );
   };
 
   return (
@@ -70,11 +74,11 @@ export default function CreateTxForm({
       <div className="columns top20">
         <div className="column is-one-fifth" />
         <div className="column">
-          <AddressField parentMethod={editTx} error={!validateAddress()}/>
+          <AddressField parentMethod={editTx} error={!validateAddress()} />
           <div className="field has-text-left">
             <p className="control has-icons-left">
               <input
-                className={"input " + (!validateAmount() ? 'is-danger' : '')}
+                className={"input " + (!validateAmount() ? "is-danger" : "")}
                 type="text"
                 placeholder="Amount"
                 name="amount"
@@ -83,15 +87,24 @@ export default function CreateTxForm({
               <span className="icon is-small is-left">Ⱡ</span>
             </p>
           </div>
-          <PassphraseField icon={'key'} parentMethod={addPassphrase} error={!validatePassphrase()} disabledValidation={disableValidation}/>
+          <PassphraseField
+            icon={"key"}
+            parentMethod={addPassphrase}
+            error={!validatePassphrase()}
+            disabledValidation={disableValidation}
+          />
           <div className="field has-text-left">
             <label className="checkbox ">
-              <input type="checkbox"  onClick={toggleSecondPassphrase}/>
+              <input type="checkbox" onClick={toggleSecondPassphrase} />
               <span className="left10">I have a secondary passphrase</span>
             </label>
           </div>
           {secondPassphrase && (
-              <PassphraseField icon={'unlock-alt'} parentMethod={addSecondPassphrase} error={false}/>
+            <PassphraseField
+              icon={"unlock-alt"}
+              parentMethod={addSecondPassphrase}
+              error={false}
+            />
           )}
           <div className="field">
             <p className="control has-text-right">
@@ -107,7 +120,11 @@ export default function CreateTxForm({
         </div>
         <div className="column is-one-fifth" />
       </div>
-        <QRCodeBroadcast isModalOpen={broadcastTxVisibility} closeModal={closeModal} qrCodeValue={signedTx}/>
+      <QRCodeBroadcast
+        isModalOpen={broadcastTxVisibility}
+        closeModal={closeModal}
+        qrCodeValue={signedTx}
+      />
     </div>
   );
 }

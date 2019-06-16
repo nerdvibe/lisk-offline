@@ -16,19 +16,19 @@ export default function VotesSummary({ nextStep, closeModal, votes }: Props) {
       <section className="modal-card-body">
         <h1 className="subtitle">Just to make sure, this are the votes:</h1>
         <div className="field is-grouped is-grouped-multiline top15">
-          {votes.map((name: string) =>
+          {votes.map((name: string) => (
             <div className="control" key={name}>
               <div className="tags">
                 <span
-                  className={`tag ${name[0] === "-"
-                    ? "is-danger"
-                    : "is-success"}`}
+                  className={`tag ${
+                    name[0] === "-" ? "is-danger" : "is-success"
+                  }`}
                 >
                   {name.substring(1)}
                 </span>
               </div>
             </div>
-          )}
+          ))}
         </div>
         <p className="top25">Everything looks correct?</p>
       </section>

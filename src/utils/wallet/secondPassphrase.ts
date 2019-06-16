@@ -1,9 +1,11 @@
-import {registerSecondPassphrase} from "@liskhq/lisk-transactions/";
+import { registerSecondPassphrase } from "@liskhq/lisk-transactions/";
 
-export const createSecondPassphrase = (passphrase: string, secondPassphrase: string) => {
-
-    return registerSecondPassphrase({
-        passphrase,
-        secondPassphrase
-    })
+export const createSecondPassphrase = (
+  passphrase: string,
+  secondPassphrase: string
+) => {
+  return registerSecondPassphrase({
+    passphrase,
+    secondPassphrase
+  });
 };
