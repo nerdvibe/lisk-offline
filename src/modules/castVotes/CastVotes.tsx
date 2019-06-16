@@ -1,11 +1,15 @@
 import React, { useState } from "react";
 import Dropdown from "./Dropdown";
 import CastVotesModal from "./castVotesModal/CastVotesModal";
-import {mainnetDelegates} from "../../utils/delegates/";
 
-export default function CastVotes() {
+export interface Props {
+  network: 'Testnet' | 'Mainnet';
+}
+
+export const CastVotes = ({network}: Props) => {
   const [votes, setVotes] = useState<string[]>([]);
   const [castVotesVisibility, setCastVotesVisibility] = useState<boolean>(false);
+  const [errorPK, setErrorPK] = useState<string | null>(null);
 
   const openCastVotesModal = () => setCastVotesVisibility(true);
   const closeCastVotesModal = () => setCastVotesVisibility(false);
@@ -25,6 +29,7 @@ export default function CastVotes() {
     )[0] as HTMLInputElement).value : delegateName;
 
     if (votes.includes(`+${delegate}`) || votes.includes(`-${delegate}`)) {
+      console.log(0);
       const index =
         (votes.indexOf(`+${delegate}`) + 1 ||
           votes.indexOf(`-${delegate}`) + 1) - 1;
@@ -34,6 +39,7 @@ export default function CastVotes() {
       return;
     }
     if (delegate.length) {
+      console.log(1, `${kind}${delegate}`);
       const votesToAdd = [...votes, `${kind}${delegate}`];
       setVotes(votesToAdd);
     }
@@ -71,7 +77,7 @@ export default function CastVotes() {
         <div className="columns top20">
           <div className="column is-one-fifth" />
           <div className="column">
-            <Dropdown addVote={addVote} addUnVote={addUnVote} votes={votes} />
+            <Dropdown addVote={addVote} addUnVote={addUnVote} votes={votes} network={network} />
             <div>
               <div className="field is-grouped is-grouped-multiline top15">
                 {votes.map((name: string, i: number) =>
@@ -94,7 +100,8 @@ export default function CastVotes() {
                 )}
               </div>
             </div>
-            {!!votes.length &&
+            <div className="has-text-danger" style={{margin: '1rem'}}> {errorPK}</div>
+            {!!votes.length && !errorPK &&
               <div className="field">
                 <p className="control has-text-right">
                   <button
@@ -110,7 +117,7 @@ export default function CastVotes() {
           <div className="column is-one-fifth" />
         </div>
       </div>
-      <CastVotesModal isModalOpen={castVotesVisibility} close={closeCastVotesModal} votes={votes}/>
+      <CastVotesModal isModalOpen={castVotesVisibility} close={closeCastVotesModal} votes={votes} network={network} setErrorPK={setErrorPK}/>
     </div>
   );
 }

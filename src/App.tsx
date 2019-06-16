@@ -22,28 +22,30 @@ import {
   faCaretDown,
   faCaretRight,
   faCog,
-  faExclamation, faUserTie, faTimesCircle, faStar
+  faFlask,
+  faExclamation, faUserTie, faTimesCircle, faStar, faNetworkWired
 } from "@fortawesome/free-solid-svg-icons";
 import CreateTx from "./modules/createTx/CreateTx";
 import CreateWallet from "./modules/createWallet/CreateWallet";
 import WalletAccess from "./modules/walletAccess/WalletAccess";
-import CastVotes from "./modules/castVotes/CastVotes";
+import { CastVotes } from "./modules/castVotes/CastVotes";
 
-library.add(faCheckCircle, faExchangeAlt, faUnlockAlt, faKey, faEye, faEyeSlash, faMagic, faQuestionCircle, faPrint, faSyncAlt, faCaretDown, faCaretRight, faCog, faExclamation, faUserTie, faTimesCircle, faStar);
+library.add(faCheckCircle, faExchangeAlt, faUnlockAlt, faKey, faEye, faEyeSlash, faMagic, faQuestionCircle, faPrint, faSyncAlt, faCaretDown, faCaretRight, faCog, faExclamation, faUserTie, faTimesCircle, faStar, faNetworkWired, faFlask);
 
 export default function App() {
 
   const [disableValidation, setDisableValidation] = useState<boolean>(false);
+  const [network, setNetwork] = useState<'Testnet' | 'Mainnet'>('Mainnet');
 
   return (
     <BrowserRouter>
       <section className="hero is-fullheight lines">
-        <Header setDisableValidation={setDisableValidation} disableValidation={disableValidation}/>
+        <Header setDisableValidation={setDisableValidation} disableValidation={disableValidation} network={network} setNetwork={setNetwork}/>
         <Switch>
           <Route exact path="/create-tx" component={() => <CreateTx disableValidation={disableValidation}/>} />
           <Route exact path="/create-wallet" component={CreateWallet} />
           <Route exact path="/access-wallet" render={() => <WalletAccess disableValidation={disableValidation}/>}/>
-          <Route exact path="/cast-votes" component={CastVotes}/>
+          <Route exact path="/cast-votes" render={() => <CastVotes network={network}/>}/>
           <Route exact path="/" component={About} />
           <Route component={About} />
         </Switch>

@@ -5,9 +5,11 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 export interface Props {
     setDisableValidation: (state: boolean) => void;
     disableValidation: boolean;
+    setNetwork: (state: 'Testnet' | 'Mainnet') => void;
+    network: 'Testnet' | 'Mainnet';
 }
 
-export const Header = ({setDisableValidation, disableValidation}: Props) => {
+export const Header = ({setDisableValidation, disableValidation, setNetwork, network}: Props) => {
 
     const [isOffline, setIsOffline] = useState<boolean>(!navigator.onLine);
 
@@ -36,7 +38,7 @@ export const Header = ({setDisableValidation, disableValidation}: Props) => {
             <div id="navbarBasicExample" className="navbar-menu">
 
                 <div className="navbar-end">
-                    <Settings setDisableValidation={setDisableValidation} disableValidation={disableValidation}/>
+                    <Settings setDisableValidation={setDisableValidation} disableValidation={disableValidation} setNetwork={setNetwork} network={network}/>
                     <div className="navbar-item">
                         <div className="buttons">
                             <a className={`button is-light is-outlined no-hover`} style={{cursor: "unset"}}>
@@ -56,9 +58,10 @@ export const Header = ({setDisableValidation, disableValidation}: Props) => {
   }
 
 
- const Settings = ({disableValidation, setDisableValidation}: Props) => {
+ const Settings = ({disableValidation, setDisableValidation, setNetwork, network}: Props) => {
 
     const toggleValidation = () => setDisableValidation(!disableValidation);
+    const toggleNetwork = () => setNetwork(network === 'Testnet' ? 'Mainnet': 'Testnet');
 
     return (
         <div className="navbar-item has-dropdown is-hoverable no-hover">
@@ -68,10 +71,13 @@ export const Header = ({setDisableValidation, disableValidation}: Props) => {
 
             <div className="navbar-dropdown" style={{borderTop: "transparent"}}>
                 <a className="navbar-item" onClick={toggleValidation}>
-                    { disableValidation ? (<span><FontAwesomeIcon icon={"exclamation"} /> Enable</span>) : 'Disable '} passphrase validation
+                    { disableValidation ? (<span><FontAwesomeIcon icon={"exclamation"} /> Enable&nbsp;</span>) : 'Disable '}passphrase validation
+                </a>
+                <a className="navbar-item" onClick={toggleNetwork}>
+                    <span><FontAwesomeIcon icon={"network-wired"} />Network:&nbsp;</span> {network}
                 </a>
                 <a className="navbar-item">
-                    V0.1b
+                    <span><FontAwesomeIcon icon={"flask"} />Version:&nbsp;</span> 1.0
                 </a>
             </div>
         </div>

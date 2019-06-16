@@ -1,19 +1,22 @@
 import React, { useState } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import Downshift from "downshift";
-import { mainnetDelegates } from "../../utils/delegates/";
+import * as delegates from "../../utils/delegates/";
 import { shuffle } from "../../utils/shuffle";
 import "./dropdown.scss";
 
-const items = shuffle(mainnetDelegates).map((d) => d.delegateName );
 
 export interface Props {
   addVote: () => void;
   addUnVote: () => void;
   votes: string[];
+  network: 'Testnet' | 'Mainnet'
 }
 
-export default function Dropdown({ addVote, addUnVote, votes }: Props) {
+export default function Dropdown({ addVote, addUnVote, votes, network }: Props) {
+
+  const networkDelegates = network === 'Testnet' ? delegates.testnetDelegates : delegates.mainnetDelegates;
+  const items = shuffle(networkDelegates).map((d) => d.delegateName );
   const [value, setValue] = useState<string>("");
 
   const handleStateChange = (changes: any) => {

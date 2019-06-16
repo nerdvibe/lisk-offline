@@ -7,7 +7,8 @@ export default function About() {
       <div className="container has-text-centered">
         <img src={logo} alt="logo" />
         <h1 className="title">Lisk Offline Wallet</h1>
-        <h2 className="subtitle">Easily manage your Lisk wallet offline</h2>
+        <h2 className="subtitle" style={{marginBottom:10}}>Easily manage your Lisk wallet offline</h2>
+        <h2 className="subtitle" style={{fontSize: '1rem', opacity: 0.3}}>Created by delegate Carbonara</h2>
       </div>
     </div>
   );

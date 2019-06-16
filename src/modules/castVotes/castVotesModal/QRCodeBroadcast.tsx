@@ -41,7 +41,7 @@ export default function QRCodeBroadcast(
                     </div>
                 }
 
-                <p className="top25">The votes are not valid until <strong>all</strong> the QR codes have been scanned and the tx is broadcasted. To broadcast the TX scan the QR code with {broadcasterUrl}</p>
+                <p className="top25">The votes are not valid until {isMultiQRCode && <span><strong>all</strong> the QR codes have been scanned and </span>} the tx is broadcasted. To broadcast the TX scan the QR code with {broadcasterUrl}</p>
                 <div>
                 </div>
             </section>
