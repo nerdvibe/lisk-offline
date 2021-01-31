@@ -17,21 +17,25 @@ Once you signed your transaction just hop into the brooadcaster application on y
 <img src="https://github.com/nerdvibe/lisk-offline/blob/master/meta/lisk-wallet.png?raw=true" width="40%">
 <img src="https://github.com/nerdvibe/lisk-offline/blob/master/meta/lisk-vote.png?raw=true" width="40%">
 </p>
+<p float="left">
+<img src="https://github.com/nerdvibe/lisk-offline/blob/master/meta/lisk-tx.png?raw=true" width="40%">
+<img src="https://github.com/nerdvibe/lisk-offline/blob/master/meta/lisk-vote1.png?raw=true" width="40%">
+</p>
 
 ## About the App
 
-Lisk-offline is composed by two applications:
+Lisk Offline is composed by two applications:
 
-- Lisk-offline which signs the transactions and should be used offline in an air-gapped environment.
-- lisk-offline-broadcaster which broadcasts the signed transactions
+- Lisk Offline which signs the transactions and should be used offline in an air-gapped environment.
+- lisk Offline-broadcaster which broadcasts the signed transactions
 
-The lisk-offline-broadcaster only works with testnet.
+The lisk Offline-broadcaster only works with testnet.
 
-The lisk-offline app only signs transactions and it doesn't care which network you want to use, it will work for both networks (testnet/mainnet), with the excecption of the voting section, where the autofiller is picking for only delegates for mainnet (so far, but testnet delegates autocomplete will be implemented in the future releases).
+The lisk Offline app only signs transactions and it doesn't care which network you want to use, it will work for both networks (testnet/mainnet), with the excecption of the voting section, where the autofiller is picking for only delegates for mainnet (so far, but testnet delegates autocomplete will be implemented in the future releases).
 
-URL for lisk-offline-broadcaster: https://test-1f089l7eg.now.sh/
+URL for lisk Offline-broadcaster: https://test-1f089l7eg.now.sh/
 
-Currently this app is not actively mantained.
+Currently this app works but is not actively mantained.
 
 ### Disclaimer:
 By using this software you accept the terms and conditions. This software is provided "as is", without warranty of any kind, express or implied, including but not limited to the warranties of merchantability, fitness for a particular purpose and noninfringement. in no event shall the authors or copyright holders be liable for any claim, damages or other liability, whether in an action of contract, tort or otherwise, arising from, out of or in connection with the software or the use or other dealings in the software.
