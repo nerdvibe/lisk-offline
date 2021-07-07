@@ -1,11 +1,17 @@
 import React, { useState } from "react";
 import Dropdown from "./Dropdown";
 import CastVotesModal from "./castVotesModal/CastVotesModal";
-import {mainnetDelegates} from "../../utils/delegates/";
 
-export default function CastVotes() {
+export interface Props {
+  network: "Testnet" | "Mainnet";
+}
+
+export const CastVotes = ({ network }: Props) => {
   const [votes, setVotes] = useState<string[]>([]);
-  const [castVotesVisibility, setCastVotesVisibility] = useState<boolean>(false);
+  const [castVotesVisibility, setCastVotesVisibility] = useState<boolean>(
+    false
+  );
+  const [errorPK, setErrorPK] = useState<string | null>(null);
 
   const openCastVotesModal = () => setCastVotesVisibility(true);
   const closeCastVotesModal = () => setCastVotesVisibility(false);
@@ -20,11 +26,13 @@ export default function CastVotes() {
     if (votes.length >= 33) {
       return;
     }
-    const delegate = !delegateName ? (document.getElementsByName(
-      "delegateName"
-    )[0] as HTMLInputElement).value : delegateName;
+    const delegate = !delegateName
+      ? (document.getElementsByName("delegateName")[0] as HTMLInputElement)
+          .value
+      : delegateName;
 
     if (votes.includes(`+${delegate}`) || votes.includes(`-${delegate}`)) {
+      console.log(0);
       const index =
         (votes.indexOf(`+${delegate}`) + 1 ||
           votes.indexOf(`-${delegate}`) + 1) - 1;
@@ -34,6 +42,7 @@ export default function CastVotes() {
       return;
     }
     if (delegate.length) {
+      console.log(1, `${kind}${delegate}`);
       const votesToAdd = [...votes, `${kind}${delegate}`];
       setVotes(votesToAdd);
     }
@@ -66,21 +75,29 @@ export default function CastVotes() {
         <h2 className="subtitle bottom0">
           You can choose up to 33 votes (vote/unvote) in one transaction
         </h2>
-        <p>If the delegate is not available in the dropdown, then please use the public key of the delegate.</p>
+        <p>
+          If the delegate is not available in the dropdown, then please use the
+          public key of the delegate.
+        </p>
         {/*<button onClick={fill}> fill </button>*/}
         <div className="columns top20">
           <div className="column is-one-fifth" />
           <div className="column">
-            <Dropdown addVote={addVote} addUnVote={addUnVote} votes={votes} />
+            <Dropdown
+              addVote={addVote}
+              addUnVote={addUnVote}
+              votes={votes}
+              network={network}
+            />
             <div>
               <div className="field is-grouped is-grouped-multiline top15">
-                {votes.map((name: string, i: number) =>
+                {votes.map((name: string, i: number) => (
                   <div className="control" key={name}>
                     <div className="tags has-addons">
                       <span
-                        className={`tag ${name[0] === "-"
-                          ? "is-danger"
-                          : "is-success"}`}
+                        className={`tag ${
+                          name[0] === "-" ? "is-danger" : "is-success"
+                        }`}
                       >
                         {name.substring(1)}
                       </span>
@@ -91,10 +108,14 @@ export default function CastVotes() {
                       />
                     </div>
                   </div>
-                )}
+                ))}
               </div>
             </div>
-            {!!votes.length &&
+            <div className="has-text-danger" style={{ margin: "1rem" }}>
+              {" "}
+              {errorPK}
+            </div>
+            {!!votes.length && !errorPK && (
               <div className="field">
                 <p className="control has-text-right">
                   <button
@@ -105,12 +126,19 @@ export default function CastVotes() {
                     Submit {votes.length} votes
                   </button>
                 </p>
-              </div>}
+              </div>
+            )}
           </div>
           <div className="column is-one-fifth" />
         </div>
       </div>
-      <CastVotesModal isModalOpen={castVotesVisibility} close={closeCastVotesModal} votes={votes}/>
+      <CastVotesModal
+        isModalOpen={castVotesVisibility}
+        close={closeCastVotesModal}
+        votes={votes}
+        network={network}
+        setErrorPK={setErrorPK}
+      />
     </div>
   );
-}
+};

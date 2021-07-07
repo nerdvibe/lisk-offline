@@ -1,19 +1,28 @@
 import React, { useState } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import Downshift from "downshift";
-import { mainnetDelegates } from "../../utils/delegates/";
+import * as delegates from "../../utils/delegates/";
 import { shuffle } from "../../utils/shuffle";
 import "./dropdown.scss";
-
-const items = shuffle(mainnetDelegates).map((d) => d.delegateName );
 
 export interface Props {
   addVote: () => void;
   addUnVote: () => void;
   votes: string[];
+  network: "Testnet" | "Mainnet";
 }
 
-export default function Dropdown({ addVote, addUnVote, votes }: Props) {
+export default function Dropdown({
+  addVote,
+  addUnVote,
+  votes,
+  network
+}: Props) {
+  const networkDelegates =
+    network === "Testnet"
+      ? delegates.testnetDelegates
+      : delegates.mainnetDelegates;
+  const items = shuffle(networkDelegates).map(d => d.delegateName);
   const [value, setValue] = useState<string>("");
 
   const handleStateChange = (changes: any) => {
@@ -33,7 +42,7 @@ export default function Dropdown({ addVote, addUnVote, votes }: Props) {
     setValue("");
   };
 
-  const isVoteInList = votes.includes('+carbonara');
+  const isVoteInList = votes.includes("+carbonara");
 
   return (
     <div>
@@ -49,12 +58,16 @@ export default function Dropdown({ addVote, addUnVote, votes }: Props) {
           selectedItem,
           inputValue,
           highlightedIndex
-        }) =>
+        }) => (
           <div style={{ position: "relative" }}>
             <div className="field has-text-left has-addons">
               <div
-                className={`control has-icons-left is-expanded  ${!isVoteInList && " tooltip is-tooltip-warning is-tooltip-top"}`}
-                  { ...(!isVoteInList && {"data-tooltip": "If you like this software, please consider voting for Carbonara" })}
+                className={`control has-icons-left is-expanded  ${!isVoteInList &&
+                  " tooltip is-tooltip-warning is-tooltip-top"}`}
+                {...!isVoteInList && {
+                  "data-tooltip":
+                    "If you like this software, please consider voting for Carbonara"
+                }}
               >
                 <input
                   className="input"
@@ -70,7 +83,7 @@ export default function Dropdown({ addVote, addUnVote, votes }: Props) {
                   <FontAwesomeIcon icon="user-tie" />
                 </span>
               </div>
-              {votes.length < 33 &&
+              {votes.length < 33 && (
                 <div className="control">
                   <a
                     className="button is-info is-outlined is-lighten"
@@ -85,41 +98,44 @@ export default function Dropdown({ addVote, addUnVote, votes }: Props) {
                   >
                     -
                   </a>
-                </div>}
+                </div>
+              )}
             </div>
 
-            {isOpen
-              ? <React.Fragment>
-                  <div className="dropdown-autocomplete has-text-left">
-                    {items
-                      .filter(
-                        item =>
-                          !inputValue ||
-                          item
-                            .toLocaleLowerCase()
-                            .includes(inputValue.toLowerCase())
-                      )
-                      .slice(0, 5)
-                      .map((item, index) =>
-                        <div
-                          {...getItemProps({
-                            key: item.value,
-                            index,
-                            item,
-                            className: `element ${highlightedIndex === index &&
-                              "highlighted"}`
-                          })}
-                            key={item}
-                        >
-                          {item}
-                          {item === "carbonara" &&
-                            <FontAwesomeIcon icon="star" />}
-                        </div>
-                      )}
-                  </div>
-                </React.Fragment>
-              : null}
-          </div>}
+            {isOpen ? (
+              <React.Fragment>
+                <div className="dropdown-autocomplete has-text-left">
+                  {items
+                    .filter(
+                      item =>
+                        !inputValue ||
+                        item
+                          .toLocaleLowerCase()
+                          .includes(inputValue.toLowerCase())
+                    )
+                    .slice(0, 5)
+                    .map((item, index) => (
+                      <div
+                        {...getItemProps({
+                          key: item.value,
+                          index,
+                          item,
+                          className: `element ${highlightedIndex === index &&
+                            "highlighted"}`
+                        })}
+                        key={item}
+                      >
+                        {item}
+                        {item === "carbonara" && (
+                          <FontAwesomeIcon icon="star" />
+                        )}
+                      </div>
+                    ))}
+                </div>
+              </React.Fragment>
+            ) : null}
+          </div>
+        )}
       </Downshift>
     </div>
   );

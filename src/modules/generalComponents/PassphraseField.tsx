@@ -6,8 +6,8 @@ export interface Props {
   parentMethod: (passphrase: string) => void;
   error?: boolean;
   errorMessage?: string;
-  disabledValidation?: boolean
-  label?: string
+  disabledValidation?: boolean;
+  label?: string;
   inputClass?: string;
 }
 
@@ -15,10 +15,10 @@ export default function PassphraseField({
   icon,
   parentMethod,
   error = false,
-    errorMessage,
-    disabledValidation = false,
-    label,
-                                          inputClass
+  errorMessage,
+  disabledValidation = false,
+  label,
+  inputClass
 }: Props) {
   const [passphraseVisibility, setPassphraseVisibility] = useState<Boolean>(
     false
@@ -32,7 +32,14 @@ export default function PassphraseField({
 
   return (
     <div className="field has-text-left">
-      <p className={`control has-icons-left has-icons-right ${disabledValidation ? "tooltip is-tooltip-warning is-tooltip-right": ""}`} data-tooltip="Passphrase validation disabled">
+      <p
+        className={`control has-icons-left has-icons-right ${
+          disabledValidation
+            ? "tooltip is-tooltip-warning is-tooltip-right"
+            : ""
+        }`}
+        data-tooltip="Passphrase validation disabled"
+      >
         <input
           className={`input ${error ? " is-danger " : ""} ${inputClass}`}
           type={passphraseVisibility ? "text" : "password"}
@@ -43,19 +50,20 @@ export default function PassphraseField({
           onChange={passPassphraseToParent}
         />
         <span className="icon is-small is-left">
-          <FontAwesomeIcon icon={!!icon ? icon as any : "key"} />
+          <FontAwesomeIcon icon={!!icon ? (icon as any) : "key"} />
         </span>
         <span
           className="icon is-small is-right is-right-clickable"
           onClick={togglePassphraseVisibility}
         >
           <FontAwesomeIcon icon={passphraseVisibility ? "eye-slash" : "eye"} />
-            {disabledValidation? <FontAwesomeIcon icon={"exclamation"} /> : ''}
+          {disabledValidation ? <FontAwesomeIcon icon={"exclamation"} /> : ""}
         </span>
-          {
-              error && <span className="has-text-warning has-text-right">{errorMessage}</span>
-          }
-
+        {error && (
+          <span className="has-text-warning has-text-right">
+            {errorMessage}
+          </span>
+        )}
       </p>
     </div>
   );

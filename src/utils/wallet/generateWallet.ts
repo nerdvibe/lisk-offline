@@ -7,8 +7,8 @@ import mnemonic from "bitcore-mnemonic";
 import nacl_factory from "js-nacl";
 //@ts-ignore -> types not available
 import bignum from "browserify-bignum";
-import {reject} from "q";
-import {bool} from "prop-types";
+import { reject } from "q";
+import { bool } from "prop-types";
 
 const buffLength = 8;
 
@@ -29,21 +29,25 @@ export interface Wallet {
   reason?: string;
 }
 
-export const generateWallet = (passphrase: string, disabledValidation: boolean = false): Promise<Wallet> => {
-
-  return new Promise((resolve) => {
-    const cb = (wallet: Wallet) =>
-    {
-      if(wallet && (wallet as Wallet).address) {
+export const generateWallet = (
+  passphrase: string,
+  disabledValidation: boolean = false
+): Promise<Wallet> => {
+  return new Promise(resolve => {
+    const cb = (wallet: Wallet) => {
+      if (wallet && (wallet as Wallet).address) {
         return resolve(wallet);
       } else {
-        return reject(wallet)
+        return reject(wallet);
       }
     };
 
     let onNaclReady = (nacl: any, passphrase: string) => {
       let mnemonicToData = (passphrase: string) => {
-        if (!passphrase || (passphrase && !isValidPassphrase(passphrase) && !disabledValidation)) {
+        if (
+          !passphrase ||
+          (passphrase && !isValidPassphrase(passphrase) && !disabledValidation)
+        ) {
           return { error: true, reason: "Passphrase not valid" };
         }
 
@@ -57,7 +61,10 @@ export const generateWallet = (passphrase: string, disabledValidation: boolean =
         let privateKey = new Buffer(kp.signSk);
 
         let getAddress = (publicKey: Buffer) => {
-          let hash = crypto.createHash("sha256").update(publicKey).digest();
+          let hash = crypto
+            .createHash("sha256")
+            .update(publicKey)
+            .digest();
           let buff = new Buffer(buffLength);
 
           for (let i = 0; i < buffLength; i++) {
@@ -73,8 +80,10 @@ export const generateWallet = (passphrase: string, disabledValidation: boolean =
           address: getAddress(publicKey),
           publicKey: publicKey.toString("hex"),
           privateKey: privateKey.toString("hex"),
-          entropy: disabledValidation ? '' : bip39.mnemonicToEntropy(passphrase),
-          seed: disabledValidation ? '' : bip39.mnemonicToSeedHex(passphrase),
+          entropy: disabledValidation
+            ? ""
+            : bip39.mnemonicToEntropy(passphrase),
+          seed: disabledValidation ? "" : bip39.mnemonicToSeedHex(passphrase),
           generatedAt: new Date()
         };
       };
@@ -85,9 +94,7 @@ export const generateWallet = (passphrase: string, disabledValidation: boolean =
     nacl_factory.instantiate((nacl: any) => {
       cb(onNaclReady(nacl, passphrase));
     });
-
   });
-
 };
 
 /**
@@ -183,8 +190,7 @@ export const generatePassphrase = ({ seed }: { seed: string[] }) =>
  *
  * @returns string The generated passphrase
  */
-export const generateMnemonic = () =>
-  new mnemonic().phrase;
+export const generateMnemonic = () => new mnemonic().phrase;
 
 /**
  * Checks if passphrase is valid using mnemonic
@@ -208,26 +214,30 @@ export const isValidPassphrase = (passphrase: string) => {
   return isValid;
 };
 
-export const inDictionary = (word:string) =>
-    mnemonic.Words.ENGLISH.indexOf(word) !== -1;
+export const inDictionary = (word: string) =>
+  mnemonic.Words.ENGLISH.indexOf(word) !== -1;
 
 export const getPassphraseValidationErrors = (passphrase: string) => {
-  const passphraseArray = passphrase.trim().split(' ');
+  const passphraseArray = passphrase.trim().split(" ");
 
-  const partialPassphraseError:string[] = [];
+  const partialPassphraseError: string[] = [];
 
-  const invalidWords = passphraseArray.filter((word) => {
+  const invalidWords = passphraseArray.filter(word => {
     const isNotInDictionary = !inDictionary(word);
     partialPassphraseError[passphraseArray.indexOf(word)] = word;
     return isNotInDictionary;
   });
 
-  let validationError = 'Passphrase is not valid';
+  let validationError = "Passphrase is not valid";
 
   if (passphraseArray.length < 12) {
-    validationError = `Passphrase should have 12 words, entered passphrase has ${passphraseArray.length}`;
+    validationError = `Passphrase should have 12 words, entered passphrase has ${
+      passphraseArray.length
+    }`;
   } else if (invalidWords.length > 0) {
-    validationError = `Please check the following words: ${invalidWords.join(" ")}`;
+    validationError = `Please check the following words: ${invalidWords.join(
+      " "
+    )}`;
   }
 
   return validationError;

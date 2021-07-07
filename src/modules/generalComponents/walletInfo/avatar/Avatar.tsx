@@ -1,9 +1,7 @@
 import BigNumber from "bignumber.js";
-// @ts-ignore
 import React from "react";
 import sha256 from "js-sha256";
 import { Gradients, gradientSchemes } from "./gradients";
-import { Wallet } from "../../../../utils/wallet";
 
 export interface Props {
   x: string | number | undefined;
@@ -144,7 +142,7 @@ const getBackgroundCircle = (size: any, gradient: any) => ({
 const pickTwo = (chunk: any, options: any) => [
   options[chunk.substr(0, 2) % options.length],
   options[
-    (chunk.substr(0, 2) - 0 + 1 + chunk.substr(2, 2) % (options.length - 1)) %
+    (chunk.substr(0, 2) - 0 + 1 + (chunk.substr(2, 2) % (options.length - 1))) %
       options.length
   ]
 ];
@@ -202,7 +200,9 @@ export class Avatar extends React.Component {
         xmlns="http://www.w3.org/2000/svg"
       >
         <Gradients scheme={gradientScheme} />
-        {shapes.map((shape, i) => <shape.component {...shape.props} key={i} />)}
+        {shapes.map((shape, i) => (
+          <shape.component {...shape.props} key={i} />
+        ))}
       </svg>
     );
   }

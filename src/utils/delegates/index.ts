@@ -1,7 +1,2 @@
-export { mainnetDelegates } from './mainnetDelegates';
-import { testnetDelegates } from './testnetDelegates';
-
-// export default {
-//     mainnetDelegates,
-//     testnetDelegates
-// }
+export { mainnetDelegates } from "./mainnetDelegates";
+export { testnetDelegates } from "./testnetDelegates";

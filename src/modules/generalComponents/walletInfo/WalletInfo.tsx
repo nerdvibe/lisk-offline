@@ -11,18 +11,28 @@ export interface Props {
   walletReset: () => void;
 }
 
-export default function WalletInfo({ wallet, walletReset}: Props) {
+export default function WalletInfo({ wallet, walletReset }: Props) {
   const [showInstructions, setShowInstructions] = useState<boolean>(false);
-  const [passphraseVisibility, setPassphraseVisibility] = useState<boolean>(false);
-  const [initializeVisibility, setInitializeVisibility] = useState<boolean>(false);
+  const [passphraseVisibility, setPassphraseVisibility] = useState<boolean>(
+    false
+  );
+  const [initializeVisibility, setInitializeVisibility] = useState<boolean>(
+    false
+  );
 
-  const [registerSecondPassphraseVisibility, setRegisterSecondPassphraseVisibility] = useState<boolean>(false);
+  const [
+    registerSecondPassphraseVisibility,
+    setRegisterSecondPassphraseVisibility
+  ] = useState<boolean>(false);
 
   const toggleShowInstructions = () => setShowInstructions(!showInstructions);
-  const togglePassphraseVisibility = () => setPassphraseVisibility(!passphraseVisibility);
+  const togglePassphraseVisibility = () =>
+    setPassphraseVisibility(!passphraseVisibility);
 
-  const openRegisterSecondPassphrase = () => setRegisterSecondPassphraseVisibility(true);
-  const closeRegisterSecondPassphrase = () => setRegisterSecondPassphraseVisibility(false);
+  const openRegisterSecondPassphrase = () =>
+    setRegisterSecondPassphraseVisibility(true);
+  const closeRegisterSecondPassphrase = () =>
+    setRegisterSecondPassphraseVisibility(false);
   const openInitializeModal = () => setInitializeVisibility(true);
   const closeInitializeModal = () => setInitializeVisibility(false);
 
@@ -46,15 +56,12 @@ export default function WalletInfo({ wallet, walletReset}: Props) {
                   <div className="column">
                     <p className="bottom5">Your public Address: </p>
                     <p>
-                      <strong className="left20">
-                        {wallet.address}
-                      </strong>
+                      <strong className="left20">{wallet.address}</strong>
                       <br />
                     </p>
                   </div>
 
-                  {wallet &&
-                    wallet.generatedAt &&
+                  {wallet && wallet.generatedAt && (
                     <div className="column has-text-right">
                       <p className="bottom5">Generated at: </p>
                       <p>
@@ -63,23 +70,28 @@ export default function WalletInfo({ wallet, walletReset}: Props) {
                         </strong>
                         <br />
                       </p>
-                    </div>}
+                    </div>
+                  )}
                 </div>
 
                 <div className="left5 right5">
-                  <p className="bottom5" onClick={togglePassphraseVisibility}>Your private Passphrase: {"  "}
-                    <FontAwesomeIcon icon={passphraseVisibility ? "eye-slash" : "eye"} />
+                  <p className="bottom5" onClick={togglePassphraseVisibility}>
+                    Your private Passphrase: {"  "}
+                    <FontAwesomeIcon
+                      icon={passphraseVisibility ? "eye-slash" : "eye"}
+                    />
                   </p>
 
                   <p>
                     <strong>
-                      {wallet.passphrase!
-                        .split(" ")
-                        .map((word: string, i: number, origArr: string[]) =>
+                      {wallet
+                        .passphrase!.split(" ")
+                        .map((word: string, i: number, origArr: string[]) => (
                           <span className="passphrase-word" key={i}>
-                            {passphraseVisibility ? word : '••••••'}{i === origArr.length - 1 ? '': " "}
+                            {passphraseVisibility ? word : "••••••"}
+                            {i === origArr.length - 1 ? "" : " "}
                           </span>
-                        )}
+                        ))}
                     </strong>
                   </p>
                 </div>
@@ -146,8 +158,17 @@ export default function WalletInfo({ wallet, walletReset}: Props) {
         </div>
       </div>
       <div className="is-clipped">
-        <CreateSecondPassphraseModal close={closeRegisterSecondPassphrase} isModalOpen={registerSecondPassphraseVisibility} passphrase={wallet.passphrase!} />
-        <InitializeWallet isModalOpen={initializeVisibility} close={closeInitializeModal} passphrase={wallet.passphrase!} address={wallet.address!}/>
+        <CreateSecondPassphraseModal
+          close={closeRegisterSecondPassphrase}
+          isModalOpen={registerSecondPassphraseVisibility}
+          passphrase={wallet.passphrase!}
+        />
+        <InitializeWallet
+          isModalOpen={initializeVisibility}
+          close={closeInitializeModal}
+          passphrase={wallet.passphrase!}
+          address={wallet.address!}
+        />
       </div>
     </div>
   );

@@ -7,10 +7,8 @@ export default function Byte(props: any) {
       animate={props.diff}
       baseClassName="stable"
       animationClassName="bouncing"
-      >
-      <span className="byte">
-        {props.value}
-      </span>
+    >
+      <span className="byte">{props.value}</span>
     </AnimateOnChange>
   );
 }
